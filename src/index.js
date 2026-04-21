@@ -1,3 +1,6 @@
 import "./style.css";
+import WeatherFetcher from "./weatherFetcher";
 
-console.log("My Webpack template!");
+WeatherFetcher.getLocationWeather("New York", "metric").then((data) => {
+	console.log(data);
+});
