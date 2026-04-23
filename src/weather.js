@@ -38,22 +38,9 @@ export const getLocationWeather = async (location, unitGroup) => {
 	}
 };
 
-const fetchCoordinatesWeather = async (lat, lon, unitGroup) => {
-	let url = `${weatherTimelineURL}/${lat},${lon}?key=${apiKey}&unitGroup=${unitGroup}&contentType=json&include=current`;
-	const response = await fetch(url);
-
-	if (response.ok) {
-		const data = await response.json();
-
-		return data;
-	}
-
-	throw new Error(response.status);
-};
-
 export const getCoordinatesWeather = async (lat, lon, unitGroup) => {
 	try {
-		const rawData = await fetchCoordinatesWeather(lat, lon, unitGroup);
+		const rawData = await fetchLocationWeather(`${lat},${lon}`, unitGroup);
 		const weather = await {
 			current: {
 				feelslike: rawData.currentConditions.feelslike,
