@@ -26,7 +26,7 @@ const searchCoordinatesWeather = async () => {
 		"metric",
 	);
 
-	searchField.value = `${location.country}, ${location.city}`;
+	searchField.value = location.address;
 
 	console.log(weather);
 };
