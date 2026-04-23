@@ -6,6 +6,31 @@
 		<title>Weather App</title>
 	</head>
 	<body>
+		<dialog id="confirmDialog">
+			<div class="container">
+				<h2>Location needed</h2>
+				<p>
+					Confirm access to your location to automatically get the
+					weather in your city
+				</p>
+				<div class="buttons-container">
+					<button
+						id="confirmButton"
+						commandfor="confirmDialog"
+						command="close"
+					>
+						Confirm
+					</button>
+					<button
+						id="closeButton"
+						commandfor="confirmDialog"
+						command="close"
+					>
+						Deny
+					</button>
+				</div>
+			</div>
+		</dialog>
 		<h1>Weather App</h1>
 		<form id="locationForm">
 			<div>
