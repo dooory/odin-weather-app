@@ -1,6 +1,6 @@
 import "./style.css";
 import { fetchLocation } from "./location";
-import { getCoordinatesWeather, getLocationWeather } from "./weatherFetcher";
+import { getCoordinatesWeather, getLocationWeather } from "./weather";
 
 const form = document.getElementById("locationForm");
 const getMyWeatherButton = document.getElementById("getMyWeather");
