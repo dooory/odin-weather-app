@@ -39,3 +39,40 @@ export const getLocationWeather = async (location, unitGroup) => {
 		return err.message;
 	}
 };
+
+const fetchCoordinatesWeather = async (lat, lon, unitGroup) => {
+	let url = `${weatherTimelineURL}/${lat},${lon}?key=${apiKey}&unitGroup=${unitGroup}&contentType=json&include=current`;
+
+	try {
+		const response = await fetch(url);
+
+		if (response.ok) {
+			const data = await response.json();
+
+			return data;
+		}
+
+		throw new Error(response.status);
+	} catch (err) {
+		return err.message;
+	}
+};
+
+export const getCoordinatesWeather = async (lat, lon, unitGroup) => {
+	try {
+		const rawData = await fetchCoordinatesWeather(lat, lon, unitGroup);
+		const weather = await {
+			current: {
+				feelslike: rawData.currentConditions.feelslike,
+				temp: rawData.currentConditions.temp,
+				conditions: rawData.currentConditions.conditions,
+				icon: rawData.currentConditions.icon,
+				location: rawData.resolvedAddress,
+			},
+		};
+
+		return weather;
+	} catch (err) {
+		return err.message;
+	}
+};
