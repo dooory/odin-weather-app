@@ -1,10 +1,6 @@
 let currentLocation;
 
-export const fetchLocation = async () => {
-	if (currentLocation) {
-		return currentLocation;
-	}
-
+const fetchLocation = async () => {
 	try {
 		let response = await fetch("http://ip-api.com/json");
 
