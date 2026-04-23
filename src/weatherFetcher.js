@@ -21,7 +21,7 @@ const fetchLocationWeather = async (location, unitGroup) => {
 	}
 };
 
-const getLocationWeather = async (location, unitGroup) => {
+export const getLocationWeather = async (location, unitGroup) => {
 	try {
 		const rawData = await fetchLocationWeather(location, unitGroup);
 		const weather = await {
@@ -38,8 +38,4 @@ const getLocationWeather = async (location, unitGroup) => {
 	} catch (err) {
 		return err.message;
 	}
-};
-
-export default {
-	getLocationWeather,
 };

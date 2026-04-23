@@ -1,5 +1,5 @@
 import "./style.css";
-import WeatherFetcher from "./weatherFetcher";
+import { getLocationWeather } from "./weatherFetcher";
 
 const form = document.getElementById("locationForm");
 
@@ -10,10 +10,7 @@ const searchLocationWeather = async (event) => {
 	const location = formData.get("location");
 	const unitGroup = formData.get("unit-group");
 
-	const weather = await WeatherFetcher.getLocationWeather(
-		location,
-		unitGroup,
-	);
+	const weather = await getLocationWeather(location, unitGroup);
 
 	console.log(weather.current);
 };
