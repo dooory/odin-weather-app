@@ -30,7 +30,7 @@ const getLocationWeather = async (location, unitGroup) => {
 				temp: rawData.currentConditions.temp,
 				conditions: rawData.currentConditions.conditions,
 				icon: rawData.currentConditions.icon,
-				location: rawData.address,
+				location: rawData.resolvedAddress,
 			},
 		};
 
