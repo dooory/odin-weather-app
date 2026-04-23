@@ -1,5 +1,5 @@
 import "./style.css";
-import { fetchLocation } from "./location";
+import { getLocation } from "./location";
 import { getCoordinatesWeather, getLocationWeather } from "./weather";
 
 const form = document.getElementById("locationForm");
@@ -19,7 +19,7 @@ const searchLocationWeather = async (event) => {
 };
 
 const searchCoordinatesWeather = async () => {
-	const location = await fetchLocation();
+	const location = await getLocation();
 	const weather = await getCoordinatesWeather(
 		location.lat,
 		location.lon,
