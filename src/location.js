@@ -1,21 +1,17 @@
 let currentLocation;
 
 const fetchLocation = async () => {
-	try {
-		let response = await fetch("http://ip-api.com/json");
+	let response = await fetch("http://ip-api.com/json");
 
-		if (response.ok) {
-			const data = response.json();
+	if (response.ok) {
+		const data = response.json();
 
-			currentLocation = data;
+		currentLocation = data;
 
-			return data;
-		}
-
-		throw new Error(response.status);
-	} catch (error) {
-		return error.message;
+		return data;
 	}
+
+	throw new Error(`HTTP ${response.status}`);
 };
 
 export const getLocation = async () => {
@@ -24,7 +20,8 @@ export const getLocation = async () => {
 	}
 
 	try {
-		let rawData = await fetchLocation();
+		const rawData = await fetchLocation();
+
 		currentLocation = {
 			address: `${rawData.city}, ${rawData.country}`,
 			country: rawData.country,
@@ -36,6 +33,8 @@ export const getLocation = async () => {
 
 		return currentLocation;
 	} catch (error) {
-		return error.message;
+		throw new Error(`Could not get user location: ${error.message}`, {
+			cause: error,
+		});
 	}
 };

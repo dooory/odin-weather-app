@@ -19,16 +19,22 @@ const searchLocationWeather = async (event) => {
 };
 
 const searchCoordinatesWeather = async () => {
-	const location = await getLocation();
-	const weather = await getCoordinatesWeather(
-		location.lat,
-		location.lon,
-		"metric",
-	);
+	try {
+		const formData = new FormData(form);
 
-	searchField.value = location.address;
+		const location = await getLocation();
+		const weather = await getCoordinatesWeather(
+			location.lat,
+			location.lon,
+			formData.get("unit-group"),
+		);
 
-	console.log(weather);
+		searchField.value = location.address;
+
+		console.log(weather.current);
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 form.addEventListener("submit", searchLocationWeather);
