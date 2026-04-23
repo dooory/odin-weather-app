@@ -1,7 +1,10 @@
 import "./style.css";
-import { getLocationWeather } from "./weatherFetcher";
+import { fetchLocation } from "./location";
+import { getCoordinatesWeather, getLocationWeather } from "./weatherFetcher";
 
 const form = document.getElementById("locationForm");
+const getMyWeatherButton = document.getElementById("getMyWeather");
+const searchField = document.getElementById("searchLocation");
 
 const searchLocationWeather = async (event) => {
 	event.preventDefault();
@@ -15,4 +18,18 @@ const searchLocationWeather = async (event) => {
 	console.log(weather.current);
 };
 
+const searchCoordinatesWeather = async () => {
+	const location = await fetchLocation();
+	const weather = await getCoordinatesWeather(
+		location.lat,
+		location.lon,
+		"metric",
+	);
+
+	searchField.value = `${location.country}, ${location.city}`;
+
+	console.log(weather);
+};
+
 form.addEventListener("submit", searchLocationWeather);
+getMyWeatherButton.addEventListener("click", searchCoordinatesWeather);
