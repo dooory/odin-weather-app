@@ -5,6 +5,13 @@ import { getCoordinatesWeather, getLocationWeather } from "./weather";
 const form = document.getElementById("locationForm");
 const getMyWeatherButton = document.getElementById("getMyWeather");
 const searchField = document.getElementById("searchLocation");
+const confirmDialog = document.getElementById("confirmDialog");
+const confirmButton = document.getElementById("confirmButton");
+const denyButton = document.getElementById("denyButton");
+
+let locationAccessAllowed = Number(
+	localStorage.getItem("locationAccessAllowed"),
+);
 
 const searchLocationWeather = async (event) => {
 	event.preventDefault();
@@ -38,4 +45,25 @@ const searchCoordinatesWeather = async () => {
 };
 
 form.addEventListener("submit", searchLocationWeather);
-getMyWeatherButton.addEventListener("click", searchCoordinatesWeather);
+
+getMyWeatherButton.addEventListener("click", () => {
+	if (locationAccessAllowed !== 1) {
+		confirmDialog.showModal();
+
+		return;
+	}
+
+	searchCoordinatesWeather();
+});
+
+confirmButton.addEventListener("click", () => {
+	locationAccessAllowed = 1;
+	localStorage.setItem("locationAccessAllowed", 1);
+
+	searchCoordinatesWeather();
+});
+
+denyButton.addEventListener("click", () => {
+	locationAccessAllowed = 0;
+	localStorage.removeItem("locationAccessAllowed");
+});
