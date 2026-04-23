@@ -6,19 +6,15 @@ const weatherTimelineURL =
 const fetchLocationWeather = async (location, unitGroup) => {
 	let url = `${weatherTimelineURL}/${location}?key=${apiKey}&unitGroup=${unitGroup}&contentType=json&include=current`;
 
-	try {
-		const response = await fetch(url);
+	const response = await fetch(url);
 
-		if (response.ok) {
-			const data = await response.json();
+	if (response.ok) {
+		const data = await response.json();
 
-			return data;
-		}
-
-		throw new Error(response.status);
-	} catch (err) {
-		return err.message;
+		return data;
 	}
+
+	throw new Error(response.status);
 };
 
 export const getLocationWeather = async (location, unitGroup) => {
@@ -35,27 +31,24 @@ export const getLocationWeather = async (location, unitGroup) => {
 		};
 
 		return weather;
-	} catch (err) {
-		return err.message;
+	} catch (error) {
+		throw new Error(`Could not get weather: ${error.message}`, {
+			cause: error,
+		});
 	}
 };
 
 const fetchCoordinatesWeather = async (lat, lon, unitGroup) => {
 	let url = `${weatherTimelineURL}/${lat},${lon}?key=${apiKey}&unitGroup=${unitGroup}&contentType=json&include=current`;
+	const response = await fetch(url);
 
-	try {
-		const response = await fetch(url);
+	if (response.ok) {
+		const data = await response.json();
 
-		if (response.ok) {
-			const data = await response.json();
-
-			return data;
-		}
-
-		throw new Error(response.status);
-	} catch (err) {
-		return err.message;
+		return data;
 	}
+
+	throw new Error(response.status);
 };
 
 export const getCoordinatesWeather = async (lat, lon, unitGroup) => {
@@ -72,7 +65,9 @@ export const getCoordinatesWeather = async (lat, lon, unitGroup) => {
 		};
 
 		return weather;
-	} catch (err) {
-		return err.message;
+	} catch (error) {
+		throw new Error(`Could not get weather: ${error.message}`, {
+			cause: error,
+		});
 	}
 };
