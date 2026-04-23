@@ -1,6 +1,21 @@
 import "./style.css";
 import WeatherFetcher from "./weatherFetcher";
 
-WeatherFetcher.getLocationWeather("New York", "metric").then((data) => {
-	console.log(data.current);
-});
+const form = document.getElementById("locationForm");
+
+const searchLocationWeather = async (event) => {
+	event.preventDefault();
+
+	const formData = new FormData(event.target);
+	const location = formData.get("location");
+	const unitGroup = formData.get("unit-group");
+
+	const weather = await WeatherFetcher.getLocationWeather(
+		location,
+		unitGroup,
+	);
+
+	console.log(weather.current);
+};
+
+form.addEventListener("submit", searchLocationWeather);
