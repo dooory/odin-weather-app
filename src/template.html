@@ -7,5 +7,27 @@
 	</head>
 	<body>
 		<h1>Weather App</h1>
+		<form id="locationForm">
+			<div>
+				<label for="searchLocation">Location</label>
+				<input
+					type="search"
+					name="location"
+					id="searchLocation"
+					placeholder="Location"
+					required
+				/>
+			</div>
+			<div>
+				<label for="unitGroup">Unit</label>
+				<select name="unit-group" id="unitGroup" required>
+					<option value="metric">Metric</option>
+					<option value="us">US</option>
+					<option value="uk">UK</option>
+					<option value="base">Scientific</option>
+				</select>
+			</div>
+			<button type="submit" id="submitLocation">Search</button>
+		</form>
 	</body>
 </html>
