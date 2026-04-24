@@ -17,18 +17,41 @@ const fetchLocationWeather = async (location, unitGroup) => {
 	throw new Error(response.status);
 };
 
+const parseWeatherData = async (rawData) => {
+	const weather = await {
+		current: {
+			feelslike: rawData.currentConditions.feelslike,
+			temp: rawData.currentConditions.temp,
+			maxTemp: rawData.days[0].tempmax,
+			minTemp: rawData.days[0].tempmin,
+			conditions: rawData.currentConditions.conditions,
+			icon: rawData.currentConditions.icon,
+			location: rawData.resolvedAddress,
+			humidity: rawData.currentConditions.humidity,
+			precip: rawData.currentConditions.precip,
+			windspeed: rawData.currentConditions.windspeed,
+			windgust: rawData.currentConditions.windgust,
+		},
+		days: [],
+	};
+
+	await rawData.days.forEach((day, index) => {
+		if (index === 0) {
+			return;
+		}
+
+		weather.days.push({
+			icon: day.icon,
+		});
+	});
+
+	return weather;
+};
+
 export const getLocationWeather = async (location, unitGroup) => {
 	try {
-		const rawData = await fetchLocationWeather(location, unitGroup);
-		const weather = await {
-			current: {
-				feelslike: rawData.currentConditions.feelslike,
-				temp: rawData.currentConditions.temp,
-				conditions: rawData.currentConditions.conditions,
-				icon: rawData.currentConditions.icon,
-				location: rawData.resolvedAddress,
-			},
-		};
+		const data = await fetchLocationWeather(location, unitGroup);
+		const weather = await parseWeatherData(data);
 
 		return weather;
 	} catch (error) {
@@ -40,16 +63,8 @@ export const getLocationWeather = async (location, unitGroup) => {
 
 export const getCoordinatesWeather = async (lat, lon, unitGroup) => {
 	try {
-		const rawData = await fetchLocationWeather(`${lat},${lon}`, unitGroup);
-		const weather = await {
-			current: {
-				feelslike: rawData.currentConditions.feelslike,
-				temp: rawData.currentConditions.temp,
-				conditions: rawData.currentConditions.conditions,
-				icon: rawData.currentConditions.icon,
-				location: rawData.resolvedAddress,
-			},
-		};
+		const data = await fetchLocationWeather(`${lat},${lon}`, unitGroup);
+		const weather = await parseWeatherData(data);
 
 		return weather;
 	} catch (error) {
