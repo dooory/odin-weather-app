@@ -32,6 +32,7 @@
         "webpack-dev-server": "^5.2.3"
     },
     "dependencies": {
-        "@flaticon/flaticon-uicons": "^3.3.1"
+        "@flaticon/flaticon-uicons": "^3.3.1",
+        "date-fns": "^4.1.0"
     }
 }
