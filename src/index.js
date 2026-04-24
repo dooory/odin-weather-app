@@ -1,6 +1,7 @@
 import "./style.css";
 import { getLocation } from "./location";
 import { getCoordinatesWeather, getLocationWeather } from "./weather";
+import { renderWeather } from "./renderer";
 
 const form = document.getElementById("locationForm");
 const getMyWeatherButton = document.getElementById("getMyWeather");
@@ -24,7 +25,7 @@ const searchLocationWeather = async (event) => {
 
 	const weather = await getLocationWeather(location, unitGroup);
 
-	console.log(weather.current);
+	renderWeather(weather);
 };
 
 const searchCoordinatesWeather = async () => {
@@ -38,7 +39,7 @@ const searchCoordinatesWeather = async () => {
 
 		searchField.value = location.address;
 
-		console.log(weather.current);
+		renderWeather(weather);
 	} catch (error) {
 		console.error(error);
 	}
