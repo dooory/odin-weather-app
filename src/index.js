@@ -32,8 +32,7 @@ const searchCoordinatesWeather = async () => {
 	try {
 		const location = await getLocation();
 		const weather = await getCoordinatesWeather(
-			location.lat,
-			location.lon,
+			location,
 			unitGroupSwitch.dataset.unitGroup,
 		);
 

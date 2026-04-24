@@ -62,10 +62,14 @@ export const getLocationWeather = async (location, unitGroup) => {
 	}
 };
 
-export const getCoordinatesWeather = async (lat, lon, unitGroup) => {
+export const getCoordinatesWeather = async (location, unitGroup) => {
 	try {
-		const data = await fetchLocationWeather(`${lat},${lon}`, unitGroup);
-		const weather = await parseWeatherData(data);
+		const data = await fetchLocationWeather(
+			`${location.lat},${location.lon}`,
+			unitGroup,
+		);
+		let weather = await parseWeatherData(data);
+		weather.current.location = location.city;
 
 		return weather;
 	} catch (error) {

@@ -6,6 +6,8 @@ const lowTempText = document.getElementById("low");
 
 const unitSwitch = document.getElementById("unitSwitch");
 
+const locationText = document.getElementById("locationText");
+
 const currentTimeText = document.getElementById("currentTime");
 const currentDateText = document.getElementById("currentDate");
 
@@ -29,6 +31,7 @@ export const renderWeather = (weather) => {
 
 	const currentDate = new Date(weather.current.datetimeEpoch);
 
+	locationText.textContent = weather.current.location;
 	currentTimeText.textContent = format(currentDate, "hh:mm aaa");
 	currentDateText.textContent = format(currentDate, "EEEE, do LLL");
 
