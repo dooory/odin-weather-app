@@ -33,29 +33,83 @@
 				</div>
 			</div>
 		</dialog>
-		<h1>Weather App</h1>
-		<form id="locationForm">
-			<div>
-				<label for="searchLocation">Location</label>
-				<input
-					type="search"
-					name="location"
-					id="searchLocation"
-					placeholder="Location"
-					required
-				/>
+		<div class="content">
+			<div class="row search">
+				<form id="locationForm" class="row">
+					<div>
+						<label for="searchLocation">Location</label>
+						<input
+							type="search"
+							name="location"
+							id="searchLocation"
+							placeholder="Location"
+							required
+						/>
+					</div>
+					<button type="submit" id="submitLocation">Search</button>
+					<button type="button" id="getMyWeather">
+						Get My Weather
+					</button>
+				</form>
 			</div>
-			<div>
-				<label for="unitGroup">Unit</label>
-				<select name="unit-group" id="unitGroup" required>
-					<option value="metric">Metric</option>
-					<option value="us">US</option>
-					<option value="uk">UK</option>
-					<option value="base">Scientific</option>
-				</select>
+			<div class="row head">
+				<div class="conditions">
+					<i class="weather"></i>
+					<h1 id="temperature"></h1>
+				</div>
+				<div class="highs-lows">
+					<h2 id="high">
+						<i class="temperature-icon"></i>
+					</h2>
+					<h2 id="low">
+						<i class="temperature-icon"></i>
+					</h2>
+				</div>
+				<div class="unit-switcher">
+					<button
+						type="button"
+						id="unitSwitch"
+						data-unit-group="metric"
+					>
+						°C
+					</button>
+				</div>
 			</div>
-			<button type="submit" id="submitLocation">Search</button>
-			<button type="button" id="getMyWeather">Get My Weather</button>
-		</form>
+			<div class="row main">
+				<div class="sub-row">
+					<h2 id="locationText"></h2>
+					<h2 id="conditionText"></h2>
+				</div>
+				<div class="sub-row">
+					<div class="time-date">
+						<h2 id="currentTime"></h2>
+						<p id="currentDate"></p>
+					</div>
+					<div class="stats">
+						<p id="precipitation"></p>
+						<p id="wind"></p>
+						<p id="humidity"></p>
+					</div>
+				</div>
+			</div>
+			<div class="row 4-day-forecast">
+				<div class="forecast-item">
+					<h3 class="day"></h3>
+					<i class="condition-icon"></i>
+				</div>
+				<div class="forecast-item">
+					<h3 class="day"></h3>
+					<i class="condition-icon"></i>
+				</div>
+				<div class="forecast-item">
+					<h3 class="day"></h3>
+					<i class="condition-icon"></i>
+				</div>
+				<div class="forecast-item">
+					<h3 class="day"></h3>
+					<i class="condition-icon"></i>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

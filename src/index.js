@@ -9,6 +9,8 @@ const confirmDialog = document.getElementById("confirmDialog");
 const confirmButton = document.getElementById("confirmButton");
 const denyButton = document.getElementById("denyButton");
 
+const unitGroupSwitch = document.getElementById("unitSwitch");
+
 let locationAccessAllowed = Number(
 	localStorage.getItem("locationAccessAllowed"),
 );
@@ -18,7 +20,7 @@ const searchLocationWeather = async (event) => {
 
 	const formData = new FormData(event.target);
 	const location = formData.get("location");
-	const unitGroup = formData.get("unit-group");
+	const unitGroup = unitGroupSwitch.dataset.unitGroup;
 
 	const weather = await getLocationWeather(location, unitGroup);
 
@@ -27,13 +29,11 @@ const searchLocationWeather = async (event) => {
 
 const searchCoordinatesWeather = async () => {
 	try {
-		const formData = new FormData(form);
-
 		const location = await getLocation();
 		const weather = await getCoordinatesWeather(
 			location.lat,
 			location.lon,
-			formData.get("unit-group"),
+			unitGroupSwitch.dataset.unitGroup,
 		);
 
 		searchField.value = location.address;
