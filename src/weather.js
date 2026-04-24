@@ -20,6 +20,7 @@ const fetchLocationWeather = async (location, unitGroup) => {
 const parseWeatherData = async (rawData) => {
 	const weather = await {
 		current: {
+			datetimeEpoch: rawData.currentConditions.datetimeEpoch,
 			feelslike: rawData.currentConditions.feelslike,
 			temp: rawData.currentConditions.temp,
 			maxTemp: rawData.days[0].tempmax,

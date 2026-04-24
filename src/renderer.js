@@ -27,7 +27,7 @@ export const renderWeather = (weather) => {
 	highTempText.textContent = `${weather.current.maxTemp}°`;
 	lowTempText.textContent = `${weather.current.minTemp}°`;
 
-	const currentDate = new Date();
+	const currentDate = new Date(weather.current.datetimeEpoch);
 
 	currentTimeText.textContent = format(currentDate, "hh:mm aaa");
 	currentDateText.textContent = format(currentDate, "EEEE, do LLL");
