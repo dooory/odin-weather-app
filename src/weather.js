@@ -1,7 +1,20 @@
+import { convert } from "convert";
+
 const apiKey = "MUKZGWAK2SR7CVH3SAVSB8KQ4";
 
 const weatherTimelineURL =
 	"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
+
+const measurements = {
+	metric: {
+		temp: "celsius",
+		distance: "kilometers",
+	},
+	us: {
+		temp: "fahrenheit",
+		distance: "miles",
+	},
+};
 
 const fetchLocationWeather = async (location, unitGroup) => {
 	let url = `${weatherTimelineURL}/${location}?key=${apiKey}&unitGroup=${unitGroup}&contentType=json&include=current`;
@@ -47,6 +60,36 @@ const parseWeatherData = async (rawData) => {
 	});
 
 	return weather;
+};
+
+export const convertDataToUnitGroup = (data, oldUnitGroup, newUnitGroup) => {
+	const oldTempUnit = measurements[oldUnitGroup].temp;
+	const oldDistanceUnit = measurements[oldUnitGroup].distance;
+
+	const newTempUnit = measurements[newUnitGroup].temp;
+	const newDistanceUnit = measurements[newUnitGroup].distance;
+
+	data.current.temp = convert(data.current.temp, oldTempUnit).to(newTempUnit);
+	data.current.maxTemp = convert(data.current.maxTemp, oldTempUnit).to(
+		newTempUnit,
+	);
+	data.current.minTemp = convert(data.current.minTemp, oldTempUnit).to(
+		newTempUnit,
+	);
+	data.current.feelslike = convert(data.current.feelslike, oldTempUnit).to(
+		newTempUnit,
+	);
+
+	data.current.windspeed = convert(
+		data.current.windspeed,
+		oldDistanceUnit,
+	).to(newDistanceUnit);
+
+	data.current.windgust = convert(data.current.windgust, oldDistanceUnit).to(
+		newDistanceUnit,
+	);
+
+	return data;
 };
 
 export const getLocationWeather = async (location, unitGroup) => {

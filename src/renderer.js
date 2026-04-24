@@ -24,10 +24,10 @@ const forecastObjects = [...forecastItems].map((element) => {
 });
 
 export const renderWeather = (weather) => {
-	temperatureText.textContent = `${weather.current.temp}°`;
+	temperatureText.textContent = `${weather.current.temp.toFixed(1)}°`;
 
-	highTempText.textContent = `${weather.current.maxTemp}°`;
-	lowTempText.textContent = `${weather.current.minTemp}°`;
+	highTempText.textContent = `${weather.current.maxTemp.toFixed(0)}°`;
+	lowTempText.textContent = `${weather.current.minTemp.toFixed(0)}°`;
 
 	const currentDate = new Date(weather.current.datetimeEpoch);
 
@@ -37,7 +37,7 @@ export const renderWeather = (weather) => {
 
 	precipitationText.textContent = `Precipitation: ${weather.current.precip}%`;
 	humidityText.textContent = `Humidity: ${weather.current.humidity}%`;
-	windText.textContent = `Wind: ${weather.current.windspeed} ${unitSwitch.dataset.unitGroup === "metric" ? "km/h" : "mi/h"}`;
+	windText.textContent = `Wind: ${weather.current.windspeed.toFixed(1)} ${unitSwitch.dataset.unitGroup === "metric" ? "km/h" : "mi/h"}`;
 
 	forecastObjects.forEach((item, key) => {
 		const forecastWeather = weather.days[key];
@@ -51,6 +51,4 @@ export const renderWeather = (weather) => {
 
 		item.dayElement.textContent = format(forecastDate, "E").toUpperCase();
 	});
-
-	console.log(weather);
 };
