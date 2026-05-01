@@ -1,10 +1,6 @@
 import "./style.css";
 import { getLocation } from "./location";
-import {
-	getCoordinatesWeather,
-	getLocationWeather,
-	convertDataToUnitGroup,
-} from "./weather";
+import { getCoordinatesWeather, getLocationWeather } from "./weather";
 import { renderWeather, renderMainWeather, changePageUnits } from "./renderer";
 
 const unitGroupSwitch = document.getElementById("unitGroupSwitch");

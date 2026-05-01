@@ -1,4 +1,4 @@
-import { format, add } from "date-fns";
+import { format } from "date-fns";
 import { convert } from "convert";
 
 const daySelectors = document.querySelectorAll(".day-selector");
