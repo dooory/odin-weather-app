@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { convert } from "convert";
+import { toZonedTime } from "date-fns-tz";
 
 const daySelectors = document.querySelectorAll(".day-selector");
 const dayObjects = [...daySelectors].map((element) => {
@@ -144,18 +145,20 @@ export const changePageUnits = (weather, oldUnits, newUnits) => {
 };
 
 export const renderMainWeather = (weather, targetDayIndex) => {
+	weather.days[targetDayIndex].timezone = weather.timezone;
 	weather = weather.days[targetDayIndex];
 
 	const date = new Date(weather.datetimeEpoch * 1000);
+	const zonedDate = toZonedTime(date, weather.timezone);
 
-	dayMonthTitleEl.textContent = format(date, "do MMM");
+	dayMonthTitleEl.textContent = format(zonedDate, "do MMM");
 
 	if (targetDayIndex === 0) {
 		dayTitleEl.textContent = "Today";
-		timeValueEl.textContent = format(date, "p");
+		timeValueEl.textContent = format(zonedDate, "p");
 		timeValueEl.classList.remove("active");
 	} else {
-		dayTitleEl.textContent = format(date, "EEEE");
+		dayTitleEl.textContent = format(zonedDate, "EEEE");
 		timeValueEl.classList.add("active");
 	}
 
@@ -210,11 +213,12 @@ export const renderWeather = (weather) => {
 	dayObjects.forEach((obj, index) => {
 		const data = weather.days[index];
 		const date = new Date(data.datetimeEpoch * 1000);
+		const zonedDate = toZonedTime(date, weather.timezone);
 
 		obj.temperatureEl.textContent = Number(data.temp).toFixed(0);
-		obj.dateFullEl.textContent = format(date, "do MMM");
+		obj.dateFullEl.textContent = format(zonedDate, "do MMM");
 		obj.dateShortEl.textContent =
-			index === 0 ? "NOW" : format(date, "eee").toUpperCase();
+			index === 0 ? "NOW" : format(zonedDate, "eee").toUpperCase();
 
 		obj.conditionIconEl.classList = "fi weather-icon";
 		obj.conditionIconEl.classList.add("fi-rs-" + conditionIcons[data.icon]);
