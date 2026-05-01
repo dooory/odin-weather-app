@@ -1,11 +1,12 @@
 import "./style.css";
-import { getLocation } from "./location";
+import { getLocationFromIp, getAddressFromCoords } from "./location";
 import { getCoordinatesWeather, getLocationWeather } from "./weather";
 import { renderWeather, renderMainWeather, changePageUnits } from "./renderer";
 
 const unitGroupSwitch = document.getElementById("unitGroupSwitch");
 const searchBar = document.getElementById("searchForLocation");
 const searchForm = document.getElementById("searchForm");
+const currentLocation = document.getElementById("currentLocation");
 
 const useLocationButton = document.getElementById("useLocation");
 
@@ -13,35 +14,55 @@ let lastWeatherReport;
 
 const unitGroups = ["metric", "us"];
 
+const displayError = (error) => {
+	currentLocation.classList.add("error");
+
+	if (error.message.endsWith("400")) {
+		currentLocation.textContent = "Invalid Location :c";
+	}
+};
+
 const searchLocationWeather = async (event) => {
 	event.preventDefault();
 
 	const formData = new FormData(event.target);
-	const location = formData.get("search-for-location");
 	const unitGroup = unitGroupSwitch.dataset.unitGroup;
 
-	const weather = await getLocationWeather(location, unitGroup);
+	try {
+		const location = formData.get("search-for-location");
+		const weather = await getLocationWeather(location, unitGroup);
 
-	lastWeatherReport = weather;
+		weather.resolvedAddress = await getAddressFromCoords(
+			weather.longitude,
+			weather.latitude,
+		);
 
-	renderWeather(weather);
+		currentLocation.classList.remove("error");
+
+		lastWeatherReport = weather;
+
+		renderWeather(weather);
+	} catch (error) {
+		displayError(error);
+	}
 };
 
 const searchCoordinatesWeather = async () => {
 	try {
-		const location = await getLocation();
+		const location = await getLocationFromIp();
 		const weather = await getCoordinatesWeather(
 			location,
 			unitGroupSwitch.dataset.unitGroup,
 		);
 
 		searchBar.value = location.address;
+		currentLocation.classList.remove("error");
 
 		lastWeatherReport = weather;
 
 		renderWeather(weather);
 	} catch (error) {
-		console.error(error);
+		displayError(error);
 	}
 };
 

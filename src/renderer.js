@@ -150,9 +150,10 @@ export const renderMainWeather = (weather, targetDayIndex) => {
 
 	dayMonthTitleEl.textContent = format(date, "do MMM");
 
-	if (weather.isToday === true) {
+	if (targetDayIndex === 0) {
 		dayTitleEl.textContent = "Today";
 		timeValueEl.textContent = format(date, "p");
+		timeValueEl.classList.remove("active");
 	} else {
 		dayTitleEl.textContent = format(date, "EEEE");
 		timeValueEl.classList.add("active");

@@ -13,6 +13,8 @@
 	--hot-text-c: #ff4e4e;
 	--c-neutral-100: #d3d3d3;
 	--c-active: #a3ffa0;
+	--error-text-c: #ff2b2b;
+
 	--min-gap: 8px;
 	--small-gap: 16px;
 	--big-gap: 24px;
@@ -132,6 +134,10 @@ header {
 
 	.location-title {
 		margin-top: var(--min-gap);
+
+		&.error {
+			color: var(--error-text-c);
+		}
 	}
 }
 
