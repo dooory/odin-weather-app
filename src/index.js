@@ -5,20 +5,13 @@ import {
 	getLocationWeather,
 	convertDataToUnitGroup,
 } from "./weather";
-import { renderWeather } from "./renderer";
+import { renderWeather, renderMainWeather, changePageUnits } from "./renderer";
 
-const form = document.getElementById("locationForm");
-const getMyWeatherButton = document.getElementById("getMyWeather");
-const searchField = document.getElementById("searchLocation");
-const confirmDialog = document.getElementById("confirmDialog");
-const confirmButton = document.getElementById("confirmButton");
-const denyButton = document.getElementById("denyButton");
+const unitGroupSwitch = document.getElementById("unitGroupSwitch");
+const searchBar = document.getElementById("searchForLocation");
+const searchForm = document.getElementById("searchForm");
 
-const unitGroupSwitch = document.getElementById("unitSwitch");
-
-let locationAccessAllowed = Number(
-	localStorage.getItem("locationAccessAllowed"),
-);
+const useLocationButton = document.getElementById("useLocation");
 
 let lastWeatherReport;
 
@@ -28,7 +21,7 @@ const searchLocationWeather = async (event) => {
 	event.preventDefault();
 
 	const formData = new FormData(event.target);
-	const location = formData.get("location");
+	const location = formData.get("search-for-location");
 	const unitGroup = unitGroupSwitch.dataset.unitGroup;
 
 	const weather = await getLocationWeather(location, unitGroup);
@@ -46,7 +39,7 @@ const searchCoordinatesWeather = async () => {
 			unitGroupSwitch.dataset.unitGroup,
 		);
 
-		searchField.value = location.address;
+		searchBar.value = location.address;
 
 		lastWeatherReport = weather;
 
@@ -62,47 +55,48 @@ const toggleUnitGroup = async () => {
 		oldUnitGroup === unitGroups[0] ? unitGroups[1] : unitGroups[0];
 
 	unitGroupSwitch.dataset.unitGroup = newUnitGroup;
-	unitGroupSwitch.textContent = newUnitGroup === unitGroups[0] ? "°C" : "°F";
 
 	if (!lastWeatherReport) {
 		return;
 	}
 
-	console.log(lastWeatherReport.current.temp);
+	let weather = structuredClone(lastWeatherReport);
 
-	const convertedData = convertDataToUnitGroup(
-		lastWeatherReport,
-		oldUnitGroup,
-		newUnitGroup,
-	);
-
-	lastWeatherReport = convertedData;
-
-	renderWeather(convertedData);
+	changePageUnits(weather, oldUnitGroup, newUnitGroup);
 };
 
-form.addEventListener("submit", searchLocationWeather);
+searchForm.addEventListener("submit", searchLocationWeather);
 
-getMyWeatherButton.addEventListener("click", () => {
-	if (locationAccessAllowed !== 1) {
-		confirmDialog.showModal();
-
-		return;
-	}
-
+useLocationButton.addEventListener("click", () => {
 	searchCoordinatesWeather();
-});
-
-confirmButton.addEventListener("click", () => {
-	locationAccessAllowed = 1;
-	localStorage.setItem("locationAccessAllowed", 1);
-
-	searchCoordinatesWeather();
-});
-
-denyButton.addEventListener("click", () => {
-	locationAccessAllowed = 0;
-	localStorage.removeItem("locationAccessAllowed");
 });
 
 unitGroupSwitch.addEventListener("click", toggleUnitGroup);
+
+const daySelectorSection = document.getElementById("daySelectorSection");
+const daySelectors = document.querySelectorAll(".day-selector");
+
+daySelectorSection.addEventListener("click", (event) => {
+	daySelectors.forEach((button, index) => {
+		if (button.contains(event.target)) {
+			button.classList.add("active");
+
+			const currentUnitGroup = unitGroupSwitch.dataset.unitGroup;
+			const lastUnitGroup = lastWeatherReport.unitGroup;
+
+			if (lastUnitGroup !== currentUnitGroup) {
+				changePageUnits(
+					structuredClone(lastWeatherReport),
+					lastUnitGroup,
+					currentUnitGroup,
+				);
+
+				return;
+			}
+
+			renderMainWeather(lastWeatherReport, index);
+		} else {
+			button.classList.remove("active");
+		}
+	});
+});

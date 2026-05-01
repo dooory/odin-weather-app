@@ -17,7 +17,7 @@ const measurements = {
 };
 
 const fetchLocationWeather = async (location, unitGroup) => {
-	let url = `${weatherTimelineURL}/${location}?key=${apiKey}&unitGroup=${unitGroup}&contentType=json&include=current`;
+	let url = `${weatherTimelineURL}/${location}?key=${apiKey}&unitGroup=${unitGroup}&contentType=json&include=current&elements=add:windspeedmax,add:windspeedmin,add:moonsetEpoch,add:moonriseEpoch&iconSet=icons2`;
 
 	const response = await fetch(url);
 
@@ -30,38 +30,6 @@ const fetchLocationWeather = async (location, unitGroup) => {
 	throw new Error(response.status);
 };
 
-const parseWeatherData = async (rawData) => {
-	const weather = await {
-		current: {
-			datetimeEpoch: rawData.currentConditions.datetimeEpoch,
-			feelslike: rawData.currentConditions.feelslike,
-			temp: rawData.currentConditions.temp,
-			maxTemp: rawData.days[0].tempmax,
-			minTemp: rawData.days[0].tempmin,
-			conditions: rawData.currentConditions.conditions,
-			icon: rawData.currentConditions.icon,
-			location: rawData.resolvedAddress,
-			humidity: rawData.currentConditions.humidity,
-			precip: rawData.currentConditions.precip,
-			windspeed: rawData.currentConditions.windspeed,
-			windgust: rawData.currentConditions.windgust,
-		},
-		days: [],
-	};
-
-	await rawData.days.forEach((day, index) => {
-		if (index === 0) {
-			return;
-		}
-
-		weather.days.push({
-			icon: day.icon,
-		});
-	});
-
-	return weather;
-};
-
 export const convertDataToUnitGroup = (data, oldUnitGroup, newUnitGroup) => {
 	const oldTempUnit = measurements[oldUnitGroup].temp;
 	const oldDistanceUnit = measurements[oldUnitGroup].distance;
@@ -69,35 +37,42 @@ export const convertDataToUnitGroup = (data, oldUnitGroup, newUnitGroup) => {
 	const newTempUnit = measurements[newUnitGroup].temp;
 	const newDistanceUnit = measurements[newUnitGroup].distance;
 
-	data.current.temp = convert(data.current.temp, oldTempUnit).to(newTempUnit);
-	data.current.maxTemp = convert(data.current.maxTemp, oldTempUnit).to(
-		newTempUnit,
-	);
-	data.current.minTemp = convert(data.current.minTemp, oldTempUnit).to(
-		newTempUnit,
-	);
-	data.current.feelslike = convert(data.current.feelslike, oldTempUnit).to(
-		newTempUnit,
-	);
+	data.currentConditions.temp = convert(
+		data.currentConditions.temp,
+		oldTempUnit,
+	).to(newTempUnit);
+	data.currentConditions.tempmax = convert(
+		data.currentConditions.tempmax,
+		oldTempUnit,
+	).to(newTempUnit);
+	data.currentConditions.tempmin = convert(
+		data.currentConditions.tempmin,
+		oldTempUnit,
+	).to(newTempUnit);
+	data.currentConditions.feelslike = convert(
+		data.currentConditions.feelslike,
+		oldTempUnit,
+	).to(newTempUnit);
 
-	data.current.windspeed = convert(
-		data.current.windspeed,
+	data.currentConditions.windspeed = convert(
+		data.currentConditions.windspeed,
 		oldDistanceUnit,
 	).to(newDistanceUnit);
 
-	data.current.windgust = convert(data.current.windgust, oldDistanceUnit).to(
-		newDistanceUnit,
-	);
+	data.currentConditions.windgust = convert(
+		data.currentConditions.windgust,
+		oldDistanceUnit,
+	).to(newDistanceUnit);
 
 	return data;
 };
 
 export const getLocationWeather = async (location, unitGroup) => {
 	try {
-		const data = await fetchLocationWeather(location, unitGroup);
-		const weather = await parseWeatherData(data);
+		let data = await fetchLocationWeather(location, unitGroup);
+		data.unitGroup = unitGroup;
 
-		return weather;
+		return data;
 	} catch (error) {
 		throw new Error(`Could not get weather: ${error.message}`, {
 			cause: error,
@@ -107,14 +82,15 @@ export const getLocationWeather = async (location, unitGroup) => {
 
 export const getCoordinatesWeather = async (location, unitGroup) => {
 	try {
-		const data = await fetchLocationWeather(
+		let data = await fetchLocationWeather(
 			`${location.lat},${location.lon}`,
 			unitGroup,
 		);
-		let weather = await parseWeatherData(data);
-		weather.current.location = location.city;
 
-		return weather;
+		data.unitGroup = unitGroup;
+		data.resolvedAddress = location.address;
+
+		return data;
 	} catch (error) {
 		throw new Error(`Could not get weather: ${error.message}`, {
 			cause: error,

@@ -33,80 +33,283 @@
 				</div>
 			</div>
 		</dialog>
-		<div class="content">
-			<div class="row search">
-				<form id="locationForm" class="row">
-					<div>
-						<label for="searchLocation">Location</label>
-						<input
-							type="search"
-							name="location"
-							id="searchLocation"
-							placeholder="Location"
-							required
-						/>
+		<div id="App" data-loaded-weather="false">
+			<div class="app-container">
+				<header>
+					<div class="current-location-section">
+						<h4 class="section-description">Current Location:</h4>
+						<h1 class="location-title" id="currentLocation">
+							None
+						</h1>
 					</div>
-					<button type="submit" id="submitLocation">Search</button>
-					<button type="button" id="getMyWeather">
-						Get My Weather
-					</button>
-				</form>
-			</div>
-			<div class="row head">
-				<div class="conditions">
-					<div class="temperature-container">
-						<h1 id="temperature">20.0°</h1>
+					<div class="search-section">
+						<form action="" id="searchForm" class="search-form">
+							<div class="search-bar">
+								<input
+									type="search"
+									name="search-for-location"
+									id="searchForLocation"
+									placeholder="Search location..."
+								/>
+								<button
+									type="submit"
+									class="search-button"
+									id="searchButton"
+								>
+									<i class="fi fi-rs-search"></i>
+								</button>
+							</div>
+						</form>
+					</div>
+					<div class="options-section">
+						<button type="button" id="useLocation">
+							Use Location
+						</button>
+						<div class="unit-switch">
+							<label class="switch">
+								<input
+									type="checkbox"
+									name="unit-group-switch"
+									id="unitGroupSwitch"
+									data-unit-group="metric"
+								/>
+								<span class="slider"></span>
+							</label>
+							<label for="unitGroupSwitch" class="unit">°F</label>
+						</div>
+					</div>
+				</header>
+				<hr />
+				<div class="content">
+					<div class="day-selector-section" id="daySelectorSection">
+						<div class="day-selector active">
+							<div class="condition-section">
+								<i class="fi fi-rs-cloud weather-icon"></i>
+								<div class="temperature-section">
+									<i
+										class="fi fi-rs-thermometer-full cold-temp-icon"
+									></i>
+									<span class="temperature">999</span>°
+								</div>
+							</div>
+							<hr />
+							<div class="day-date-section">
+								<h2 class="date-short">NOW</h2>
+								<hr class="width-seperator" />
+								<p class="date-full">999th Apr</p>
+							</div>
+						</div>
+						<div class="day-selector">
+							<div class="condition-section">
+								<i class="fi fi-rs-cloud weather-icon"></i>
+								<div class="temperature-section">
+									<i
+										class="fi fi-rs-thermometer-full cold-temp-icon"
+									></i>
+									<span class="temperature">999</span>°
+								</div>
+							</div>
+							<hr />
+							<div class="day-date-section">
+								<h2 class="date-short">NOW</h2>
+								<hr class="width-seperator" />
+								<p class="date-full">999th Apr</p>
+							</div>
+						</div>
+						<div class="day-selector">
+							<div class="condition-section">
+								<i class="fi fi-rs-cloud weather-icon"></i>
+								<div class="temperature-section">
+									<i
+										class="fi fi-rs-thermometer-full cold-temp-icon"
+									></i>
+									<span class="temperature">999</span>°
+								</div>
+							</div>
+							<hr />
+							<div class="day-date-section">
+								<h2 class="date-short">NOW</h2>
+								<hr class="width-seperator" />
+								<p class="date-full">999th Apr</p>
+							</div>
+						</div>
+					</div>
+					<main>
+						<div class="main-header">
+							<div class="left-section">
+								<h1 class="day-title" id="dayTitle">
+									Yesterday
+								</h1>
+								<hr class="vertical-seperator" />
+								<div class="date-time-section">
+									<p class="date-text" id="dayMonthTitle">
+										999th Apr
+									</p>
+									<p class="time-text" id="timeValue">
+										99:99 pm
+									</p>
+								</div>
+							</div>
+							<div class="right-section">
+								<div class="precipitation">
+									<i
+										class="fi fi-rs-raindrops cold-temp-icon"
+									></i>
+									<p class="precipitation-value">
+										Precipitation:
+										<span id="precip">999</span>%
+									</p>
+								</div>
+								<div class="high-low-temp">
+									<div
+										class="high-temp-section"
+										title="Max Temperature"
+									>
+										<i
+											class="fi fi-rs-thermometer-full hot-temp-icon"
+										></i>
+										<p>
+											<span id="maxTemp">999</span>
+											°
+										</p>
+									</div>
+									<div
+										class="low-temp-section"
+										title="Min Temperature"
+									>
+										<i
+											class="fi fi-rs-thermometer-full cold-temp-icon"
+										></i>
+										<p>
+											<span id="minTemp">999</span>
+											°
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr />
+						<div class="main-body">
+							<div class="left-section">
+								<i
+									class="fi fi-rs-cloud condition-icon"
+									id="conditionIcon"
+								></i>
+								<div class="current-temperature">
+									<h1 class="temperature-value">
+										<span id="temperature">999</span>°
+									</h1>
+									<p class="feels-like-temperature">
+										Feels like:
+										<span id="feelsLike">999</span>°
+									</p>
+								</div>
+							</div>
+							<div class="right-section">
+								<h1 class="condition-title" id="conditionTitle">
+									Meteor Shower
+								</h1>
+								<hr />
+								<p
+									class="condition-description"
+									id="weatherDescription"
+								>
+									Lorem ipsum dolor, sit amet consectetur
+									adipisicing elit. Iure facere inventore
+								</p>
+							</div>
+						</div>
+					</main>
+					<div class="other-section">
+						<div class="wind-stats-section section">
+							<div class="stats-section-header">
+								<h3>Winds</h3>
+								<i class="fi fi-rs-wind"></i>
+							</div>
+							<hr />
+							<div class="stats-list">
+								<p class="wind-speed-stat stat">
+									<b>Speed </b>
+									<span id="windSpeed">999</span>
+									<span class="speed-unit">km/h</span>
+								</p>
+								<p class="wind-gusts-stat stat">
+									<b>Gusts </b>
+									<span id="windGust">999</span>
+									<span class="speed-unit">km/h</span>
+								</p>
+								<p class="wind-max-stat stat">
+									<b>Max </b>
+									<span id="maxWindSpeed">999</span>
+									<span class="speed-unit">km/h</span>
+								</p>
+								<p class="wind-min-stat stat">
+									<b>Min </b>
+									<span id="minWindSpeed">999</span>
+									<span class="speed-unit">km/h</span>
+								</p>
+							</div>
+						</div>
+						<div class="moon-stats-section section">
+							<div class="stats-section-header">
+								<h3>Moon</h3>
+								<i class="fi fi-rs-moon"></i>
+							</div>
+							<hr />
+							<ul class="stats-list">
+								<li class="moonrise-stat stat">
+									<p>
+										<b>Moon Rise</b>
+										<span id="moonRiseTime">99:99 pm</span>
+									</p>
+								</li>
+								<li class="moonset-stat stat">
+									<p>
+										<b>Moonset</b>
+										<span id="moonSetTime">99:99 pm</span>
+									</p>
+								</li>
+							</ul>
+						</div>
+						<div class="sun-stats-section section">
+							<div class="stats-section-header">
+								<h3>Sun</h3>
+								<i class="fi fi-rs-sun"></i>
+							</div>
+							<hr />
+							<ul class="stats-list">
+								<li class="uvindex-stat stat">
+									<p>
+										<b>UV Index: </b
+										><span id="uvIndex">99</span>
+									</p>
+								</li>
+								<li class="sunrise-stat stat">
+									<p>
+										<b>Sunrise </b>
+										<span id="sunRiseTime">99:99 am</span>
+									</p>
+								</li>
+								<li class="sunset-stat stat">
+									<p>
+										<b>Sunrise </b>
+										<span id="sunSetTime">99:99 pm</span>
+									</p>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
-				<div class="highs-lows">
-					<h2 id="high">99</h2>
-					<h2 id="low">0</h2>
-				</div>
-				<div class="unit-switcher">
-					<button
-						type="button"
-						id="unitSwitch"
-						data-unit-group="metric"
-					>
-						°C
-					</button>
-				</div>
 			</div>
-			<div class="row main">
-				<div class="sub-row">
-					<h2 id="locationText">Auckland, New Zealand</h2>
-					<h2 id="conditionText">Clear Sky</h2>
+			<footer>
+				<div class="profile-link">
+					Made by <a href="https://github.com/dooory">Dory</a>!
 				</div>
-				<div class="sub-row">
-					<div class="time-date">
-						<h2 id="currentTime">12:00pm</h2>
-						<p id="currentDate">Friday, 26th Sep</p>
-					</div>
-					<div class="stats">
-						<p id="precipitation">Precipitation: 0%</p>
-						<p id="wind">Humidity: 80%</p>
-						<p id="humidity">Wind: 6km/h</p>
-					</div>
-				</div>
-			</div>
-			<div class="row 4-day-forecast">
-				<div class="forecast-item">
-					<h3 class="day">MON</h3>
-					<i class="condition"></i>
-				</div>
-				<div class="forecast-item">
-					<h3 class="day">TUE</h3>
-					<i class="condition"></i>
-				</div>
-				<div class="forecast-item">
-					<h3 class="day">WED</h3>
-					<i class="condition"></i>
-				</div>
-				<div class="forecast-item">
-					<h3 class="day">THU</h3>
-					<i class="condition"></i>
-				</div>
-			</div>
+				<hr />
+				<a href="https://github.com/dooory/odin-weather-app"
+					>Repository</a
+				>
+			</footer>
 		</div>
 	</body>
 </html>
