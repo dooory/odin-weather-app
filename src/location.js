@@ -3,7 +3,7 @@ const apiKey = "db1a6a095b92433cbd60b6a44536219f";
 const coordURL = "https://api.geoapify.com/v1/geocode/reverse?format=json";
 
 const fetchLocationFromIp = async () => {
-	let response = await fetch("http://ip-api.com/json");
+	let response = await fetch("https://ipapi.co/json");
 
 	if (response.ok) {
 		const data = response.json();
@@ -38,12 +38,12 @@ export const getLocationFromIp = async () => {
 		const rawData = await fetchLocationFromIp();
 
 		currentLocation = {
-			address: `${rawData.city}, ${rawData.country}`,
-			country: rawData.country,
-			countryCode: rawData.countryCode,
+			address: `${rawData.city}, ${rawData.country_name}`,
+			country: rawData.country_name,
+			countryCode: rawData.country,
 			city: rawData.city,
-			lon: rawData.lon,
-			lat: rawData.lat,
+			lon: rawData.latitude,
+			lat: rawData.latitude,
 		};
 
 		return currentLocation;
