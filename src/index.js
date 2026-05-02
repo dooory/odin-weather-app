@@ -19,6 +19,8 @@ const displayError = (error) => {
 
 	if (error.message.endsWith("400")) {
 		currentLocation.textContent = "Invalid Location :c";
+	} else {
+		console.error(error);
 	}
 };
 
