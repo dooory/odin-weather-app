@@ -42,8 +42,6 @@ body {
 		"Helvetica Neue",
 		sans-serif;
 	background: var(--main-bg-c);
-
-	min-height: 100vh;
 }
 
 ul {
@@ -96,14 +94,12 @@ i {
 }
 
 #App {
-	height: 100%;
-
 	.app-container {
-		margin: auto;
 		max-width: 800px;
-		display: grid;
+		margin: auto;
+		display: flex;
+		flex-direction: column;
 		gap: var(--big-gap);
-
 		padding: var(--big-gap);
 
 		& > hr {
@@ -155,7 +151,7 @@ header {
 }
 
 .search-bar {
-	max-width: 400px;
+	max-width: 500px;
 	flex: 1;
 	position: relative;
 	display: inline-block;
@@ -163,7 +159,8 @@ header {
 	input {
 		border-radius: 50px;
 		border: 3px solid var(--sec-text-c);
-		padding: var(--small-gap) var(--big-gap);
+		padding: var(--small-gap);
+		padding-right: 64px;
 		font-size: 1rem;
 		width: 100%;
 	}
@@ -274,7 +271,6 @@ header {
 .day-selector-section {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	justify-content: space-between;
 	gap: var(--small-gap);
 }
 
