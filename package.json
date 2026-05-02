@@ -1,21 +1,23 @@
 {
-    "name": "webpack-template",
+    "name": "odin-weather-app",
     "version": "1.0.0",
     "description": "",
-    "homepage": "https://github.com/dooory/webpack-template#readme",
+    "homepage": "https://github.com/dooory/odin-weather-app#readme",
     "bugs": {
-        "url": "https://github.com/dooory/webpack-template/issues"
+        "url": "https://github.com/dooory/odin-weather-app/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/dooory/webpack-template.git"
+        "url": "git+https://github.com/dooory/odin-weather-app.git"
     },
     "license": "ISC",
     "author": "",
     "main": "index.js",
     "scripts": {
         "start": "webpack serve --open --config webpack.dev.js",
-        "build": "webpack --config webpack.prod.js"
+        "build": "webpack --config webpack.prod.js",
+	"predeploy": "npm run build",
+	"deploy": "gh-pages -d dist"
     },
     "devDependencies": {
         "@eslint/css": "^1.1.0",
