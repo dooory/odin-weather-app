@@ -16,8 +16,8 @@
     "scripts": {
         "start": "webpack serve --open --config webpack.dev.js",
         "build": "webpack --config webpack.prod.js",
-	"predeploy": "npm run build",
-	"deploy": "gh-pages -d dist"
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
     },
     "devDependencies": {
         "@eslint/css": "^1.1.0",
@@ -25,6 +25,7 @@
         "@eslint/markdown": "^8.0.1",
         "css-loader": "^7.1.2",
         "eslint": "^10.2.0",
+        "gh-pages": "^6.3.0",
         "globals": "^17.5.0",
         "html-webpack-plugin": "^5.6.5",
         "prettier": "3.8.3",
