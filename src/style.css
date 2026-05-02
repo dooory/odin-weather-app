@@ -484,28 +484,3 @@ main {
 		text-align: center;
 	}
 }
-
-footer {
-	display: flex;
-	justify-content: center;
-	color: var(--c-neutral-100);
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	padding: var(--small-gap);
-	background-color: var(--teritary-bg-c);
-	align-items: center;
-	gap: var(--small-gap);
-
-	a {
-		color: hsl(from var(--c-neutral-100) h s 50%);
-		text-decoration: none;
-	}
-
-	hr {
-		height: 100%;
-		border: 2px solid var(--c-neutral-100);
-		border-radius: 100%;
-	}
-}
